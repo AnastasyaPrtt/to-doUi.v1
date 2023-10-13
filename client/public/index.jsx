@@ -1,0 +1,10 @@
+export { default as CalendarIcon } from "./Vector.svg";
+export { default as DateIcon } from "./arrows 1.svg";
+export { default as AllIcon } from "./done 1.svg";
+export { default as AddTaskIcon } from "./addTaskIcon.svg";
+export { default as InfoIcon } from "./InfoIcon.svg";
+export { default as CheckedIcon } from "./checkbox.svg";
+export { default as EditIcon } from "./editIcon.svg";
+export { default as DeleteIcon } from "./deleteIcon.svg";
+export {default as SaveIcon} from "./Save.svg";
+export {default as CloseIcon} from "./close.svg";
