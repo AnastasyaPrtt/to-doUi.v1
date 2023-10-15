@@ -1,13 +1,14 @@
 import { ReactNode } from 'react';
 
-export interface LayoutProps{
+export interface LayoutProps {
 	children: ReactNode
 }
-export interface ButtonNavProps{
+export interface ButtonNavProps {
 	children: ReactNode
+	onClick?: (e) => void
 }
 
-export interface ButtonProps{
+export interface ButtonProps {
 	children: ReactNode,
 	name?: string,
 	onClick?: (e) => void,

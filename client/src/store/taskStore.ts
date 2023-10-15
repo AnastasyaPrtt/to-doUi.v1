@@ -2,18 +2,15 @@ import { TaskProps } from '@/interface/interface';
 import { makeAutoObservable } from 'mobx';
 
 export default class taskStore {
-	_tasks = [
-		{ id: 1, title: "task 1", date: "2023-10-10", isChecked: false },
-		{ id: 2, title: "task 2", date: "2023-10-11", isChecked: false },
-		{ id: 3, title: "task 3", date: "2023-10-09", isChecked: false }
-	]
+	_tasks = []
+	_isUpdate = false
 	constructor() {
 		makeAutoObservable(this)
 	}
-	setTasks(tasks: TaskProps[]) {
+	setTasks(tasks) {
 		this._tasks = tasks
 	}
-	addTask(task: TaskProps) {
+	addTask(task) {
 		this._tasks.push(task)
 	}
 	removeTask(id: number) {
@@ -25,9 +22,16 @@ export default class taskStore {
 	editTask(id: number, text: string) {
 		this._tasks = this._tasks.map(item => item.id == id ? { ...item, title: text } : item)
 	}
+	setIsUpdate(bool: boolean) {
+		this._isUpdate = bool
+	}
+	get IsUpdate() {
+		return this._isUpdate
+	}
 	get tasks() {
 		return this._tasks
 	}
+
 }
 export interface TaskStore {
 	_tasks: TaskProps[],

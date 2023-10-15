@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, css } from 'styled-components';
+import styled, { createGlobalStyle, css } from "styled-components";
 
 export const Global = createGlobalStyle`
 	*{
@@ -12,7 +12,7 @@ export const Global = createGlobalStyle`
     padding: 254px 90px;
     margin: auto 90px;
   };
-`
+`;
 export const FormAuth = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,21 +62,21 @@ export const FormAuth = styled.div`
   }
 `;
 export const LayoutStyle = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
 export const TypographyStyle = styled.div`
-	min-width: 376px;
-	height: 390px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  min-width: 376px;
+  height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   div {
     color: #404040;
     font-weight: 700;
     font-size: 96px;
-    
+
     padding: auto 0;
     margin-right: 166px;
     & span {
@@ -85,112 +85,126 @@ export const TypographyStyle = styled.div`
   }
 `;
 export const HeaderContainer = styled.header`
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-	width: 672px;
-	background: #f4f4f4;
-	border-radius: 10px;
-	padding: 12px 16px;
-	margin-bottom: 30px;
-	color: #9333EA;
+  width: 672px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 30px;
+  color: #9333ea;
 
-	& h2{
-		font-size: 20px;
-		font-weight: 700;
-	}
-	& p{
-		font-size: 16px;
-		font-weight: 400;
-	}
-`
+  & h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  & p {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .icon {
+    margin-right: 5px;
+    &-exit {
+      cursor: pointer;
+    }
+  }
+`;
 export const ButtonNavStyle = styled.button`
-	background: none;
-	color: #6B7280;
-	padding: 8px;
-	margin: 5px 0;
-	text-align: start;
-	border-radius: 10px;
-	transition: all .2s;
+  background: none;
+  color: #6b7280;
+  padding: 8px;
+  margin: 5px 0;
+  text-align: start;
+  border-radius: 10px;
+  transition: all 0.2s;
 
-	&:hover{
-		background: #9333EA0F;
-		color: #9333EA;
-	}
-	&.active{
-		background: #9333EA0F;
-		color: #9333EA;                                  
-	}
-	&:focus{
-		background: #9333EA0F;
-		color: #9333EA;
-	}
+  &:hover {
+    background: #9333ea0f;
+    color: #9333ea;
+  }
+  &.active {
+    background: #9333ea0f;
+    color: #9333ea;
+  }
+  &:focus {
+    background: #9333ea0f;
+    color: #9333ea;
+  }
 `;
 export const ButtonStyle = styled.button<{ $name?: string }>`
-	width: 185px;
-	padding: 10px 40px;
-	color: #9333EA;
-	border-radius: 10px;
-	outline: none;
-	border: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: all 0.2s;
-	cursor: pointer;
+  width: 185px;
+  padding: 10px 40px;
+  color: #9333ea;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  cursor: pointer;
 
-	${(props) => {
-		switch (props.$name) {
-			case 'add task':
-				return css`
-					background: #9333EA0F;
-					color: #9333EA;`
-			case 'Save':
-				return css`
-					background: #67B8CB0F;
-					color: #67B8CB;`
-			case 'Close':
-				return css`
-					background: #6B72800F;
-					color: #6B7280;`
-			case 'Delete':
-				return css`
-				background: #F564970F;
-				color: #F56497;`
-		}
-	}}
+  ${(props) => {
+    switch (props.$name) {
+      case "add task":
+        return css`
+          background: #9333ea0f;
+          color: #9333ea;
+        `;
+      case "Save":
+        return css`
+          background: #67b8cb0f;
+          color: #67b8cb;
+        `;
+      case "Close":
+        return css`
+          background: #6b72800f;
+          color: #6b7280;
+        `;
+      case "Delete":
+        return css`
+          background: #f564970f;
+          color: #f56497;
+        `;
+    }
+  }}
 
-	&:hover{
-		${(props) => {
-		switch (props.$name) {
-			case 'Add task':
-				return css`
-					background: #9233ea4b;
-					color: #9333EA;`
-			case 'Save':
-				return css`
-					background: #67b9cb50;
-					color: #67B8CB;`
-			case 'Close':
-				return css`
-					background: #6b728052;
-					color: #6B7280;`
-			case 'Delete':
-				return css`
-				background: #f564974b;
-				color: #F56497;`
-		}
-	}}
-	}
+  &:hover {
+    ${(props) => {
+      switch (props.$name) {
+        case "Add task":
+          return css`
+            background: #9233ea4b;
+            color: #9333ea;
+          `;
+        case "Save":
+          return css`
+            background: #67b9cb50;
+            color: #67b8cb;
+          `;
+        case "Close":
+          return css`
+            background: #6b728052;
+            color: #6b7280;
+          `;
+        case "Delete":
+          return css`
+            background: #f564974b;
+            color: #f56497;
+          `;
+      }
+    }}
+  }
 `;
 export const MainStyle = styled.div`
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 export const NavBarStyle = styled.div`
   position: absolute;
   display: flex;
@@ -199,7 +213,7 @@ export const NavBarStyle = styled.div`
   top: 0;
   left: 0;
   width: 185px;
-	height: 312px;
+  height: 312px;
   button {
     cursor: pointer;
     outline: none;
@@ -246,77 +260,78 @@ export const ListTasksStyle = styled.div`
   background: #f4f4f4;
   border-radius: 10px;
   padding: 30px 19px;
-	&::-webkit-scrollbar{
-		width: 7px;
+  &::-webkit-scrollbar {
+    width: 7px;
     background-color: none;
-		padding: 10px;
-	}
-	&::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #6b728080;
-}
+    padding: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #6b728080;
+  }
 `;
 export const TaskStyle = styled.li`
-	position: relative;
-	list-style: none;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	border-radius: 10px;
-	padding	: 7px 10px;
-	background: #9333EA0F;
+  position: relative;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  padding: 7px 10px;
+  background: #9333ea0f;
   margin-bottom: 10px;
 
-	label, span{
-		display: flex;
-		flex-direction: row;
-		cursor: pointer;
-	}
-	button{
-		cursor: pointer;
-		outline: none;
-		background: none;
-		border: none;
-	}
-	h3{
-		font-weight: 400;
-		font-size: 16px;
-	}
-	p{
-		font-weight: 400;
-		font-size: 14px;
-		color: #6B7280;
-	}
-	input[type=checkbox]{
-		display: none;
-	}
-	.icon{
-		margin-right: 10px;
-		color: #6B7280;
-		&.active{
-			color: #9333EA;
-		}
-	}
+  label,
+  span {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+  }
+  button {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+  }
+  h3 {
+    font-weight: 400;
+    font-size: 16px;
+  }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #6b7280;
+  }
+  input[type="checkbox"] {
+    display: none;
+  }
+  .icon {
+    margin-right: 10px;
+    color: #6b7280;
+    &.active {
+      color: #9333ea;
+    }
+  }
 
-	.task-info{
-		display: flex;
-		flex-direction: row;
-	}
+  .task-info {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 export const DropdownBtnStyled = styled.div`
-	position: absolute;
-	display: none;
-	bottom: -10px;
-	right: 10px;
-	border-radius: 10px;
-	border: 1px solid #7D40FF;
-	background: white;
-	padding: 2px 5px;
-	&.active{
-		display: block;
-	}
-`
+  position: absolute;
+  display: none;
+  bottom: -10px;
+  right: 10px;
+  border-radius: 10px;
+  border: 1px solid #7d40ff;
+  background: white;
+  padding: 2px 5px;
+  &.active {
+    display: block;
+  }
+`;
 export const ModalWrapStyle = styled.div`
   position: absolute;
   top: 0;
@@ -379,12 +394,12 @@ export const ModalStyle = styled.div`
     background: #f3f3f3;
     padding: 4px 5px;
   }
-  input[type=text] {
+  input[type="text"] {
     width: 290px;
     margin-right: 10px;
   }
-  input[type=date] {
+  input[type="date"] {
     width: 150px;
     margin: 0;
   }
-`
+`;

@@ -6,5 +6,6 @@ export { default as InfoIcon } from "./InfoIcon.svg";
 export { default as CheckedIcon } from "./checkbox.svg";
 export { default as EditIcon } from "./editIcon.svg";
 export { default as DeleteIcon } from "./deleteIcon.svg";
-export {default as SaveIcon} from "./Save.svg";
-export {default as CloseIcon} from "./close.svg";
+export { default as SaveIcon } from "./Save.svg";
+export { default as CloseIcon } from "./close.svg";
+export { default as Exit } from "./exit.svg";

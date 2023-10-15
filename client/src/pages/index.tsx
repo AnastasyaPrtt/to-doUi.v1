@@ -1,23 +1,20 @@
-import { Main } from '@/components/Main';
-import { Typography } from '@/components/Typography';
 import { Layout } from '@/components/layout/Layout';
 import { Global } from '@/styles/style';
-import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
-import { Context } from './_app';
+import { Context } from '@/utils/context';
+import userStore from '@/store/userStore';
+import taskStore from '@/store/taskStore';
 
 
-export default function Home() {
-
-	const { user } = useContext(Context)
-
-
+const Home = () => {
 	return (
-		<>
+		<Context.Provider value={{
+			user: new userStore(),
+			task: new taskStore()
+		}}>
 			<Global />
-			<Layout>
-				<Main />
-			</Layout>
-		</>
+			<Layout />
+		</Context.Provider>
 	)
 }
+
+export default Home
