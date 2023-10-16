@@ -254,21 +254,15 @@ export const ListTasksStyle = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  overflow: auto;
   width: 466px;
   height: 312px;
   background: #f4f4f4;
   border-radius: 10px;
   padding: 30px 19px;
-  &::-webkit-scrollbar {
-    width: 7px;
-    background-color: none;
-    padding: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #6b728080;
-  }
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
 `;
 export const TaskStyle = styled.li`
   position: relative;

@@ -1,19 +1,24 @@
 import { Layout } from '@/components/layout/Layout';
 import { Global } from '@/styles/style';
-import { Context } from '@/utils/context';
-import userStore from '@/store/userStore';
-import taskStore from '@/store/taskStore';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 
 const Home = () => {
-	return (
-		<Context.Provider value={{
-			user: new userStore(),
-			task: new taskStore()
-		}}>
-			<Global />
-			<Layout />
-		</Context.Provider>
+	const router = useRouter()
+
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+		if (!token) {
+			router.push('/registration', undefined, { shallow: true })
+		}
+	}, [])
+
+
+	return (<>
+		<Global />
+		<Layout />
+	</>
 	)
 }
 

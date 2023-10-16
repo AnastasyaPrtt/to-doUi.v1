@@ -7,37 +7,22 @@ import { Main } from '../Main'
 import { Context } from '@/utils/context'
 import Auth from '../auth'
 import { observer } from 'mobx-react-lite'
-import { check } from '@/http/userAPI'
-import { Loader } from '../loader'
+import { useRouter } from 'next/router'
 
 
-export const Layout: React.FC = observer(() => {
-	const { user } = useContext(Context)
-	const [loading, setLoading] = useState(false)
-
-	// useEffect(() => {
-	// 	check().then(data => {
-	// 		user.setUser(true)
-	// 		user.setIsAuth(true)
-	// 	}).finally(() => setLoading(false))
-	// }, [])
+export const Layout: React.FC = () => {
 
 
 	return (<>
-		{loading ? <Loader /> :
-			<LayoutStyle>
-				<Typography />
-				{
-					user.isAuth ?
-						<div>
-							<Header />
-							<Main />
-						</div> :
-						<Auth />
-				}
-			</LayoutStyle>}
+		<LayoutStyle>
+			<Typography />
+
+			<div>
+				<Header />
+				<Main />
+			</div>
+
+		</LayoutStyle>
 	</>
-
-
 	)
-})
+}

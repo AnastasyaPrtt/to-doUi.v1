@@ -1,32 +1,50 @@
 import { ListTasksStyle, TaskStyle } from '@/styles/style'
 import React, { useContext, useEffect, useState } from 'react'
 import { Task } from './Task'
-import { CheckedIcon, InfoIcon } from '../../public'
 import { observer } from 'mobx-react-lite'
-import { Context } from '@/utils/context'
-import axios from 'axios'
 import { TaskProps } from '@/interface/interface'
+import Pagination from './ui/Pagination'
 
 interface ListTasksProps {
-	onClick: (id: number) => void
-	task: TaskProps[]
-	onChange: () => void
+	tasks: TaskProps[]
+	handleCompleteStatusUpdate: (item: TaskProps) => void
+	handleClickEditTask: (item: TaskProps, title: string) => void
+	handleOpenModalDelete: (id: number) => void,
+	pageNumber: (page: number) => void,
+	pagination: {
+		count: number
+	}
 }
 
 
-export const ListTasks: React.FC<ListTasksProps> = observer(({ onClick, task, onChange }) => {
-	// const { task } = useContext(Context)
+export const ListTasks: React.FC<ListTasksProps> = observer(({
+	tasks,
+	handleCompleteStatusUpdate,
+	handleClickEditTask,
+	handleOpenModalDelete,
+	pageNumber,
+	pagination
+}) => {
+
 
 
 	return (
 		<ListTasksStyle>
 			<div>
 				{
-					task.map(el => (
-						<Task key={el.id} item={el} onClick={onClick} onChange={onChange} />
+					tasks.map(task => (
+						<Task key={task.id}
+							task={task}
+							handleCompleteStatusUpdate={handleCompleteStatusUpdate}
+							handleClickEditTask={handleClickEditTask}
+							handleOpenModalDelete={handleOpenModalDelete}
+
+						/>
 					))
 				}
 			</div>
+			<Pagination pageNumber={pageNumber} pagination={pagination} />
+
 		</ListTasksStyle>
 	)
 })

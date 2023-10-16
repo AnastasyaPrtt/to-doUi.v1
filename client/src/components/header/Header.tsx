@@ -1,21 +1,30 @@
 import { HeaderContainer } from '@/styles/style'
 import Image from 'next/image'
 import { Exit } from '../../../public'
-import { useContext } from 'react'
-import { observer } from 'mobx-react-lite'
-import { Context } from '@/utils/context'
+import { useContext, useEffect, useState } from 'react'
+import jwt_decode from 'jwt-decode';
+import { useRouter } from 'next/router'
 
-export const Header: React.FC = observer(() => {
-	const { user } = useContext(Context)
+export const Header: React.FC = () => {
+
+	const router = useRouter()
+	const [user, setUser] = useState('')
 	const click = () => {
-		user.setUser({})
-		user.setIsAuth(false)
+		router.push('/registration', undefined, { shallow: true })
+		localStorage.clear()
 	}
+	useEffect(() => {
+		const token = localStorage.getItem('token')
+		const user = jwt_decode(token)
+		setUser(user)
+	}, [])
+
+
 	return (
 		<>
 			<HeaderContainer>
 				<h2>To-Do</h2>
-				<p>userName</p>
+				<p>{user.email}</p>
 				<div>
 					<Image
 						src='/userIcon.svg'
@@ -30,4 +39,4 @@ export const Header: React.FC = observer(() => {
 			</HeaderContainer>
 		</>
 	)
-})
+}

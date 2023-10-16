@@ -4,12 +4,16 @@ import { makeAutoObservable } from 'mobx';
 export default class taskStore {
 	_tasks = []
 	_isUpdate = false
+	_page = 1
+	_totalCount = 0
+	_limit = 5
 	constructor() {
 		makeAutoObservable(this)
 	}
 	setTasks(tasks) {
 		this._tasks = tasks
 	}
+
 	addTask(task) {
 		this._tasks.push(task)
 	}

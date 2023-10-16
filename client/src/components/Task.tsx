@@ -10,48 +10,41 @@ import axios from 'axios'
 
 
 interface TaskInterface {
-	item: TaskProps;
-	onClick: (id: number) => void
-	onChange: () => void
+	task: TaskProps,
+	handleOpenModalDelete: (id: number) => void,
+	handleCompleteStatusUpdate: (task: TaskProps) => void
+	handleClickEditTask: (task: TaskProps, title: string) => void
 }
 
-export const Task: React.FC<TaskInterface> = observer(({ item, onClick, onChange }) => {
-	const { task } = useContext(Context)
+export const Task: React.FC<TaskInterface> = observer(({
+	task,
+	handleOpenModalDelete,
+	handleCompleteStatusUpdate,
+	handleClickEditTask
+}) => {
+
 	const [isDropdown, setDropdown] = useState(false)
 	const [isEdited, setIsEdited] = useState(false);
-	const [title, setTitle] = useState(item.title)
+	const [isComplete, setIsComplete] = useState(task.isChecked)
+	const [title, setTitle] = useState(task.title)
+
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key == 'Enter') setIsEdited(!isEdited)
+		console.log('!')
+		handleClickEditTask(task, title)
+	}
+
+
 
 	const ref = useRef();
 	useOnClickOutside(ref, () => setDropdown(false));
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			setIsEdited(!isEdited)
-			updateTaskTitle()
-		}
-	}
-
-	const updateTaskTitle = () => {
-		onChange()
-		axios
-			.put('http://localhost:5000/api/tasks/' + `${item.id}`, { title })
-			.catch(data => console.log(data))
-		task.setIsUpdate(true)
-	}
-	const updateTaskChecked = () => {
-		onChange()
-		const isChecked = !item.isChecked
-		axios
-			.put('http://localhost:5000/api/tasks/' + `${item.id}`, { isChecked })
-			.catch(data => console.log(data))
-		task.setIsUpdate(true)
-	}
-
 	return (
 		<TaskStyle>
 			<label>
-				<span className={item.isChecked ? 'icon active' : 'icon'}>
-					<input type="checkbox" checked={item.isChecked} onChange={updateTaskChecked} />
+				<span className={task.isChecked ? 'icon active' : 'icon'}>
+					<input type="checkbox" checked={task.isChecked} onChange={() => handleCompleteStatusUpdate(task)} />
 					<CheckedIcon />
 				</span>
 				{
@@ -59,21 +52,22 @@ export const Task: React.FC<TaskInterface> = observer(({ item, onClick, onChange
 						<input
 							type="text"
 							value={title}
+							onKeyDown={handleKeyDown}
 							onChange={(e) => setTitle(e.target.value)}
-							onKeyDown={handleKeyDown} /> :
-						<h3>{item.title}</h3>
+						/> :
+						<h3 onClick={() => setIsEdited(false)}>{task.title}</h3>
 				}
 			</label>
 
 			<div className='task-info'>
-				<p>{item.date}</p>
+				<p>{task.date}</p>
 				<div onClick={() => setDropdown(true)}>
 					<InfoIcon />
 					<DropdownBtnStyled ref={ref} className={isDropdown ? 'active' : ''}>
-						<button onClick={() => setIsEdited(true)}>
+						<button onClick={() => setIsEdited(!isEdited)}>
 							<EditIcon />
 						</button>
-						<button onClick={() => onClick(item.id)}>
+						<button onClick={() => handleOpenModalDelete(task.id)}>
 							<DeleteIcon />
 						</button>
 					</DropdownBtnStyled>

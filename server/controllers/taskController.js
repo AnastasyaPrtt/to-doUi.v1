@@ -16,8 +16,11 @@ class TaskController {
 	};
 
 	async getAll(req, res, next) {
-		const { id } = req.params
-		const tasks = await Task.findAll({ where: { userId: id } })
+		let { userId, limit, page } = req.query
+		page = page || 1
+		limit = limit || 5
+		let offset = page * limit - limit
+		const tasks = await Task.findAndCountAll({ where: { userId }, order: ['createdAt'], limit, offset })
 		if (!tasks) {
 			return next(ApiError.badRequest('У пользователя еще нет задач'))
 		}

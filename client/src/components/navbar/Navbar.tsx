@@ -7,7 +7,7 @@ import axios from 'axios';
 
 interface NavbarProps {
 	addTask: () => void,
-	onClick: () => void
+	onClick?: () => void
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ addTask, onClick }) => {

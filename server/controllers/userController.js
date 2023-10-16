@@ -55,6 +55,9 @@ class UserController {
 		const token = jwt.sign({ id: req.user.id, email: req.user.email },
 			process.env.SECRET_KEY,
 			{ expiresIn: '24h' })
+		if (token) {
+			return next(ApiError.badRequest('Пользователь не авторизован'))
+		}
 		return res.json({ token })
 	}
 }
