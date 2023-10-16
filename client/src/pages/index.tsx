@@ -1,3 +1,4 @@
+import { Header } from '@/components/header/Header';
 import { Layout } from '@/components/layout/Layout';
 import { Global } from '@/styles/style';
 import { useRouter } from 'next/router';

@@ -11,11 +11,8 @@ interface ListTasksProps {
 	handleClickEditTask: (item: TaskProps, title: string) => void
 	handleOpenModalDelete: (id: number) => void,
 	pageNumber: (page: number) => void,
-	pagination: {
-		count: number
-	}
+	count: number
 }
-
 
 export const ListTasks: React.FC<ListTasksProps> = observer(({
 	tasks,
@@ -23,7 +20,7 @@ export const ListTasks: React.FC<ListTasksProps> = observer(({
 	handleClickEditTask,
 	handleOpenModalDelete,
 	pageNumber,
-	pagination
+	count
 }) => {
 
 
@@ -43,7 +40,7 @@ export const ListTasks: React.FC<ListTasksProps> = observer(({
 					))
 				}
 			</div>
-			<Pagination pageNumber={pageNumber} pagination={pagination} />
+			<Pagination pageNumber={pageNumber} count={count} />
 
 		</ListTasksStyle>
 	)

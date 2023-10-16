@@ -47,8 +47,6 @@ class UserController {
 		},
 			process.env.SECRET_KEY,
 			{ expiresIn: '24h' })
-
-
 		return res.json({ token })
 	}
 	async check(req, res) {

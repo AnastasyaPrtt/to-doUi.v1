@@ -27,5 +27,5 @@ export interface ModalProps {
 	IconBtn: ReactNode,
 	children: ReactNode,
 	onClickClose: () => void,
-	onClickSave: () => void
+	onClickSave: () => void,
 }

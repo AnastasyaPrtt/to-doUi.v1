@@ -174,29 +174,29 @@ export const ButtonStyle = styled.button<{ $name?: string }>`
 
   &:hover {
     ${(props) => {
-      switch (props.$name) {
-        case "Add task":
-          return css`
+    switch (props.$name) {
+      case "Add task":
+        return css`
             background: #9233ea4b;
             color: #9333ea;
           `;
-        case "Save":
-          return css`
+      case "Save":
+        return css`
             background: #67b9cb50;
             color: #67b8cb;
           `;
-        case "Close":
-          return css`
+      case "Close":
+        return css`
             background: #6b728052;
             color: #6b7280;
           `;
-        case "Delete":
-          return css`
+      case "Delete":
+        return css`
             background: #f564974b;
             color: #f56497;
           `;
-      }
-    }}
+    }
+  }}
   }
 `;
 export const MainStyle = styled.div`
@@ -238,7 +238,12 @@ export const NavBarStyle = styled.div`
     margin-right: 10px;
   }
   .dropdown {
+    position: absolute;
+    width: 100%;
+    border-radius: 10px;
+    z-index: 2;
     display: none;
+    background: #D3C9FC;
     &.active {
       display: block;
       display: flex;
@@ -314,6 +319,7 @@ export const TaskStyle = styled.li`
   }
 `;
 export const DropdownBtnStyled = styled.div`
+cursor: pointer;
   position: absolute;
   display: none;
   bottom: -10px;

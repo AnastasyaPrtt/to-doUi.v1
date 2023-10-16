@@ -14,9 +14,12 @@ export const Header: React.FC = () => {
 		localStorage.clear()
 	}
 	useEffect(() => {
-		const token = localStorage.getItem('token')
-		const user = jwt_decode(token)
-		setUser(user)
+		const token = localStorage.getItem('token') || undefined
+		if (token !== undefined) {
+			const user = jwt_decode(token)
+			setUser(user.email)
+		}
+
 	}, [])
 
 
@@ -24,7 +27,7 @@ export const Header: React.FC = () => {
 		<>
 			<HeaderContainer>
 				<h2>To-Do</h2>
-				<p>{user.email}</p>
+				<p>{user}</p>
 				<div>
 					<Image
 						src='/userIcon.svg'

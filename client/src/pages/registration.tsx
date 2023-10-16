@@ -12,7 +12,6 @@ const Registration = () => {
 	const [password, setPassword] = useState('');
 	const [isLogin, setIsLogin] = useState(true)
 	const router = useRouter()
-
 	const signIn = () => {
 		if (isLogin) {
 			axios
@@ -24,7 +23,6 @@ const Registration = () => {
 			axios
 				.post('http://localhost:5000/api/user/registration', { email, password })
 				.then(data => {
-					console.log(data.data.token)
 					localStorage.setItem('token', data.data.token)
 				})
 		}

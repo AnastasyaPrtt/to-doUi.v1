@@ -1,31 +1,27 @@
 import { MainStyle } from '@/styles/style'
 import { Navbar } from './navbar/Navbar'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { ListTasks } from './ListTasks'
 import { Modal } from './Modal'
 import { DeleteIcon, SaveIcon } from '../../public'
 import { observer } from 'mobx-react-lite'
-import { Context } from '@/utils/context'
 import axios from 'axios'
 import { TaskProps } from '@/interface/interface'
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode'
+import useOnClickOutside from '@/useOnClickOutside'
 
 export const Main: React.FC = observer(() => {
 
 	const [modal, setModal] = useState('none')
-	const [tasks, setTasks] = useState([
-		{
-			id: 1,
-			title: "задача 1",
-			date: "2023-10-16",
-			isChecked: false
-		}
-	])
-	console.log(tasks.length)
+	const [tasks, setTasks] = useState<TaskProps[]>([])
+
 	const [renderTasks, setRenderTasks] = useState(tasks)
-	const [pagination, setPagination] = useState({ count: tasks.length })
+	const [count, setCount] = useState(tasks.length) 													// количество тасков
 	const [createTask, setCreateTask] = useState({ title: '', date: '' })
 	const [removeTask, setRemoveTask] = useState<number>(0)
+
+	const ref = useRef();
+	useOnClickOutside(ref, () => setModal('none'));
 
 	const handleOpenModalDelete = (id: number) => {
 		setModal('delete')
@@ -50,6 +46,7 @@ export const Main: React.FC = observer(() => {
 		axios
 			.delete('http://localhost:5000/api/tasks/' + `${removeTask}`)
 			.then(data => console.log(data))
+		setCount(count - 1)
 	}
 	const addTask = () => {
 		if (createTask.title == '') return;
@@ -59,39 +56,42 @@ export const Main: React.FC = observer(() => {
 			date: createTask.date,
 			isChecked: false
 		}
-		const list = [...tasks, task]
-
+		const list = [task, ...tasks]
+		const limit = 5
 		postCreateTask(task)
-		list.length > 5 ? getTasks() : null
+		// if (list.length > limit) {
+		// 	setCount(count)
+		// }
 		setTasks(list)
-
 		setCreateTask({ title: '', date: '' })
 		setModal('none')
 	}
 
-
-	const getTasks = (page = 1) => {
-		const token = localStorage.getItem('token')
-		const user = jwt_decode(token)
-		axios
-			.get('http://localhost:5000/api/tasks?userId=' + `${user.id}` + `&page=${page}`)
-			.then(data => {
-				setTasks(data.data.tasks.rows)
-				setPagination({ count: data.data.tasks.count })
-
-			})
+	const getTasks = (filter: string, page = 1) => {
+		const token = localStorage.getItem('token') || undefined
+		if (token !== undefined) {
+			const user = jwtDecode(token)
+			axios
+				.get('http://localhost:5000/api/tasks?userId=' + `${user.id}` + `&filterBy=${filter}` + `&page=${page}`)
+				.then(data => {
+					setTasks(data.data.tasks.rows)
+					setCount(data.data.tasks.count)
+				})
+		}
 	}
 
 	const postCreateTask = async (task: TaskProps) => {
-		const token = localStorage.getItem('token')
-		const user = jwt_decode(token)
-		axios
-			.post('http://localhost:5000/api/tasks/' + `${user.id}`, task)
-			.then(data => console.log(data.data))
+		const token = localStorage.getItem('token') || undefined
+		if (token !== undefined) {
+			const user = jwtDecode(token)
+			axios
+				.post('http://localhost:5000/api/tasks/' + `${user.id}`, task)
+				.then(data => console.log(data.data))
+		}
 	}
 
 	useEffect(() => {
-		getTasks()
+		getTasks('all')
 	}, [])
 
 	useEffect(() => {
@@ -102,15 +102,15 @@ export const Main: React.FC = observer(() => {
 		<MainStyle>
 			<Navbar
 				addTask={() => setModal('add')}
+				filter={(filter) => getTasks(filter)}
 			/>
 			<ListTasks
 				tasks={renderTasks}
 				handleCompleteStatusUpdate={handleCompleteStatusUpdate}
 				handleClickEditTask={handleClickEditTask}
 				handleOpenModalDelete={handleOpenModalDelete}
-
-				pageNumber={(page: number) => getTasks(page)}
-				pagination={pagination}
+				pageNumber={(page: number) => getTasks('all', page)}
+				count={count}
 			/>
 		</MainStyle>
 		{
@@ -122,6 +122,7 @@ export const Main: React.FC = observer(() => {
 				IconBtn={<SaveIcon />}
 				onClickClose={() => setModal('none')}
 				onClickSave={addTask}
+				ref={ref}
 			>
 				<input
 					type="text"
@@ -134,11 +135,11 @@ export const Main: React.FC = observer(() => {
 					value={createTask.date}
 					onChange={(e) => setCreateTask(taskNew => ({ ...taskNew, date: e.target.value }))}
 				/>
-			</Modal>
+			</Modal >
 		}
 		{
 			modal == 'delete' &&
-			<Modal title={'Delete task'} nameBtn={'Delete'} active={modal} onClickClose={() => setModal('none')} onClickSave={handleClickDelete} IconBtn={<DeleteIcon />}>
+			<Modal title={'Delete task'} nameBtn={'Delete'} active={modal} onClickClose={() => setModal('none')} onClickSave={handleClickDelete} IconBtn={<DeleteIcon />} ref={ref}>
 				<h3>Are you sure about deleting this task?</h3>
 			</Modal>
 		}

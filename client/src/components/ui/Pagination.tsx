@@ -27,13 +27,12 @@ export const PaginationStyle = styled.div`
 
 interface PaginationProps {
 	pageNumber: (page: number) => void
-	pagination: {
-		count: number
-	}
+	count: number
 }
 
-const Pagination: React.FC<PaginationProps> = ({ pageNumber, pagination }) => {
-	const pageCount = Math.ceil(pagination.count / 5)
+const Pagination: React.FC<PaginationProps> = ({ pageNumber, count }) => {
+	const pageCount = Math.ceil(count / 5)
+	console.log(pageCount)
 	const [activePage, setActivePage] = useState(1)
 	const pages: Array<number> = [];
 	for (let i = 0; i < pageCount;) {

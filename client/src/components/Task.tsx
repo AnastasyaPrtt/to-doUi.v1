@@ -31,7 +31,6 @@ export const Task: React.FC<TaskInterface> = observer(({
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key == 'Enter') setIsEdited(!isEdited)
-		console.log('!')
 		handleClickEditTask(task, title)
 	}
 

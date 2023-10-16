@@ -6,8 +6,12 @@ import { CloseIcon } from '../../public';
 
 export const Modal: React.FC<ModalProps> = ({ active, title, nameBtn, IconBtn, children, onClickClose, onClickSave }) => {
 
+
+
 	return (
-		<ModalWrapStyle className={active == 'add' || active == 'delete' ? "active" : ""}>
+		<ModalWrapStyle
+			className={active == 'add' || active == 'delete' ? "active" : ""} onKeyDown={(e) => console.log(e.key)}
+		>
 			<ModalStyle>
 				<div className="header-modal">
 					<h3>{title}</h3>
