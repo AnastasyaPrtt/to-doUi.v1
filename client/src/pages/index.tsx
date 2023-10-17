@@ -18,9 +18,9 @@ const Home = () => {
 		if (!token) {
 			router.push('/registration', undefined, { shallow: true })
 		}
-		check().then(data => {
-			console.log(data)
-		})
+		// check().then(data => {
+		// 	console.log(data)
+		// })
 	}, [])
 
 

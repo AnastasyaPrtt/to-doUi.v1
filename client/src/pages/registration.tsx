@@ -10,12 +10,13 @@ const Registration = () => {
 	const router = useRouter()
 
 	const signIn = () => {
-		setAuth(true)
+
 		if (isLogin) {
 			axios
 				.post('http://localhost:7000/api/user/login', { email, password })
 				.then(data => {
 					localStorage.setItem('token', data.data.token)
+					setAuth(true)
 				})
 				.catch((error) => alert(error.response.data.message))
 		} else {
@@ -23,15 +24,18 @@ const Registration = () => {
 				.post('http://localhost:7000/api/user/registration', { email, password })
 				.then(data => {
 					localStorage.setItem('token', data.data.token)
+					setAuth(true)
 				})
 				.catch((error) => alert(error.response.data.message))
 		}
 	}
 
+
 	useEffect(() => {
-		setTimeout(() => {
-			localStorage.getItem('token') && router.back()
-		}, 500)
+		if (window.localStorage.token) {
+			console.log('!')
+			router.back()
+		}
 	}, [auth])
 
 	return (
@@ -52,7 +56,7 @@ const Registration = () => {
 							</div>
 					}
 				</div>
-				{isLogin ? <button onClick={signIn}>Войти</button> : <button onClick={signIn}>Зарегистрироваться</button>}
+				{isLogin ? <button onClick={() => { signIn(); }}>Войти</button> : <button onClick={signIn}>Зарегистрироваться</button>}
 			</FormAuth>
 		</>
 	)

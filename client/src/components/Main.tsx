@@ -23,7 +23,6 @@ export const Main: React.FC = () => {
 		setModal('delete')
 		setRemoveTask(id)
 	}
-
 	const handleCompleteStatusUpdate = async (item: TaskProps) => {
 		setTasks(tasks.map(task => task.id == item.id ? { ...task, isChecked: !task.isChecked } : task))
 		const isChecked = !item.isChecked
