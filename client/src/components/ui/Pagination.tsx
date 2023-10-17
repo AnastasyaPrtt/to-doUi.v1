@@ -1,43 +1,15 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { PaginationProps } from '@/interface/interface';
+import { PaginationStyle } from '@/styles/style';
+import React, { useEffect, useState } from "react";
 
-export const PaginationStyle = styled.div`
-  display: flex;
-  justify-content: center;
-  button{
-		cursor: pointer;
-		background: none;
-		border: none;
-		outline: none;
-		border-radius: 50px;
-		width: 20px;
-		height: 20px;
-		margin-right: 5px;
-		&.active{
-			border: 1px solid #983DEB;
-		}
-		&:hover{
-			border: 1px solid #983DEB;
-		}
-		&:active{
-			border: 1px solid #983DEB;
-		}
-	}
-`;
+const Pagination: React.FC<PaginationProps> = ({ pageNumber, count, pageActive }) => {
+	const pages = Array.from({ length: Math.ceil(count / 5) }, (_item: number, index: number) => index + 1)
+	const [activePage, setActivePage] = useState(pageActive)
 
-interface PaginationProps {
-	pageNumber: (page: number) => void
-	count: number
-}
+	useEffect(() => {
+		setActivePage(pageActive)
+	}, [pageActive])
 
-const Pagination: React.FC<PaginationProps> = ({ pageNumber, count }) => {
-	const pageCount = Math.ceil(count / 5)
-	console.log(pageCount)
-	const [activePage, setActivePage] = useState(1)
-	const pages: Array<number> = [];
-	for (let i = 0; i < pageCount;) {
-		pages.push(++i)
-	}
 	return (
 		<PaginationStyle>
 			<div>

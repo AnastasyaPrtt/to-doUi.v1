@@ -403,3 +403,37 @@ export const ModalStyle = styled.div`
     margin: 0;
   }
 `;
+export const PaginationStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  button{
+		cursor: pointer;
+		background: none;
+		border: none;
+		outline: none;
+		border-radius: 50px;
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		&.active{
+			border: 1px solid #983DEB;
+		}
+		&:hover{
+			border: 1px solid #983DEB;
+		}
+		&:active{
+			border: 1px solid #983DEB;
+		}
+	}
+`;
+export const DropdownStyled = styled.div`
+	display: none;
+	position: absolute;
+	background: #D5CAFD;
+	border-radius: 10px;
+	&.active{
+		display: block;
+		z-index: 2;
+
+	}
+`

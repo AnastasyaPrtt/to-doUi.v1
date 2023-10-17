@@ -1,3 +1,4 @@
+import { Layout } from '@/components/layout/Layout'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
@@ -7,6 +8,8 @@ export default function App({ Component, pageProps }: AppProps) {
 		<Head>
 			<title>To Do Ui</title>
 		</Head>
-		<Component {...pageProps} />
+		<Layout>
+			<Component {...pageProps} />
+		</Layout>
 	</>
 }

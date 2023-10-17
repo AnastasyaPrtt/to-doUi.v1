@@ -1,46 +1,44 @@
-import { login, registration } from '@/http/userAPI';
 import { FormAuth, Global } from '@/styles/style';
-import { Context } from '@/utils/context';
 import axios from 'axios';
-import { observer } from 'mobx-react-lite';
-import jwt_decode from 'jwt-decode';
-import React, { useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
-
 const Registration = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [isLogin, setIsLogin] = useState(true)
+	const [auth, setAuth] = useState(false)
 	const router = useRouter()
+
 	const signIn = () => {
+		setAuth(true)
 		if (isLogin) {
 			axios
-				.post('http://localhost:5000/api/user/login', { email, password })
+				.post('http://localhost:7000/api/user/login', { email, password })
 				.then(data => {
 					localStorage.setItem('token', data.data.token)
 				})
+				.catch((error) => alert(error.response.data.message))
 		} else {
 			axios
-				.post('http://localhost:5000/api/user/registration', { email, password })
+				.post('http://localhost:7000/api/user/registration', { email, password })
 				.then(data => {
 					localStorage.setItem('token', data.data.token)
 				})
+				.catch((error) => alert(error.response.data.message))
 		}
-		redirect()
+	}
 
-	}
-	const redirect = () => {
-		if (localStorage.getItem('token')) {
-			router.back()
-		}
-	}
+	useEffect(() => {
+		setTimeout(() => {
+			localStorage.getItem('token') && router.back()
+		}, 500)
+	}, [auth])
 
 	return (
 		<>
 			<Global />
 			<FormAuth>
 				{isLogin ? <h1>Авторизация</h1> : <h1>Регистрация</h1>}
-
 				<input type="text" placeholder="Введите email ..." value={email} onChange={(e) => setEmail(e.target.value)} />
 				<input type="password" placeholder="Введите пароль ..." value={password} onChange={(e) => setPassword(e.target.value)} />
 				<div className="text">

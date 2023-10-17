@@ -1,20 +1,9 @@
-
 import { DropdownBtnStyled, TaskStyle } from '@/styles/style'
-import React, { useContext, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { CheckedIcon, DeleteIcon, EditIcon, InfoIcon } from '../../public'
 import { observer } from 'mobx-react-lite'
 import useOnClickOutside from '@/useOnClickOutside'
-import { Context } from '@/utils/context'
-import { TaskProps } from '@/interface/interface'
-import axios from 'axios'
-
-
-interface TaskInterface {
-	task: TaskProps,
-	handleOpenModalDelete: (id: number) => void,
-	handleCompleteStatusUpdate: (task: TaskProps) => void
-	handleClickEditTask: (task: TaskProps, title: string) => void
-}
+import { TaskInterface } from '@/interface/interface'
 
 export const Task: React.FC<TaskInterface> = observer(({
 	task,
@@ -25,16 +14,12 @@ export const Task: React.FC<TaskInterface> = observer(({
 
 	const [isDropdown, setDropdown] = useState(false)
 	const [isEdited, setIsEdited] = useState(false);
-	const [isComplete, setIsComplete] = useState(task.isChecked)
 	const [title, setTitle] = useState(task.title)
-
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key == 'Enter') setIsEdited(!isEdited)
 		handleClickEditTask(task, title)
 	}
-
-
 
 	const ref = useRef();
 	useOnClickOutside(ref, () => setDropdown(false));

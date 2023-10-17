@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const ApiError = require('../error/ApiError');
 const { Task } = require('../models/models');
+const dateNow = require('../dateNow')
 
 class TaskController {
 	async create(req, res) {
@@ -16,51 +17,50 @@ class TaskController {
 	};
 
 	async getAll(req, res, next) {
+
 		let { userId, filterBy, limit, page } = req.query
 		page = page || 1
 		limit = limit || 5
-		let offset = page * limit - limit
-		if (filterBy == 'all') {
-			const tasks = await Task.findAndCountAll({ where: { userId }, order: [['createdAt', 'DESC']], limit, offset })
+
+		if (filterBy == 'All') {
+			const tasks = await Task.findAndCountAll({ where: { userId }, order: [['createdAt', 'DESC']], limit, offset: page * limit - limit })
 			if (!tasks) {
 				return next(ApiError.badRequest('У пользователя еще нет задач'))
 			}
 			return res.json({ tasks })
 		}
 
-		if (filterBy == 'done') {
-			const tasks = await Task.findAndCountAll({ where: { userId, isChecked: true }, limit, offset })
+		if (filterBy == 'Done') {
+			const tasks = await Task.findAndCountAll({ where: { userId, isChecked: true }, limit, offset: page * limit - limit })
 			if (!tasks) {
 				return next(ApiError.badRequest('У пользователя еще нет задач'))
 			}
 			return res.json({ tasks })
 		}
 
-		if (filterBy == 'undone') {
-			const tasks = await Task.findAndCountAll({ where: { userId, isChecked: false }, limit, offset })
+		if (filterBy == 'Undone') {
+			const tasks = await Task.findAndCountAll({ where: { userId, isChecked: false }, limit, offset: page * limit - limit })
 			if (!tasks) {
 				return next(ApiError.badRequest('У пользователя еще нет задач'))
 			}
 			return res.json({ tasks })
 		}
 
-		if (filterBy == 'today') {
-			const dateNow = String(new Date().getFullYear() + '-' + (new Date().getMonth() + 1 < 10 ? '0' + new Date().getMonth() + 1 : new Date().getMonth() + 1) + '-' + (new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate()));
-			const tasks = await Task.findAndCountAll({ where: { userId, date: dateNow }, limit, offset })
+		if (filterBy == 'Today') {
+
+			const tasks = await Task.findAndCountAll({ where: { userId, date: dateNow }, limit, offset: page * limit - limit })
 			if (!tasks) {
 				return next(ApiError.badRequest('У пользователя еще нет задач'))
 			}
 			return res.json({ tasks })
 		}
-		if (filterBy == 'date') {
-			const tasks = await Task.findAndCountAll({ where: { userId }, order: [['date', 'ASC']], limit, offset })
+		if (filterBy == 'Date') {
+			const tasks = await Task.findAndCountAll({ where: { userId }, order: [['date', 'ASC']], limit, offset: page * limit - limit })
 			if (!tasks) {
 				return next(ApiError.badRequest('У пользователя еще нет задач'))
 			}
 			return res.json({ tasks })
 		}
-
-
 	};
 
 	async delete(req, res, next) {

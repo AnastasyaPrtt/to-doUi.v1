@@ -1,16 +1,15 @@
 import { ModalStyle, ModalWrapStyle } from '@/styles/style'
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { Button } from './ui/Button';
 import { CloseIcon } from '../../public';
+import { ModalProps } from '@/interface/interface';
 
 
 export const Modal: React.FC<ModalProps> = ({ active, title, nameBtn, IconBtn, children, onClickClose, onClickSave }) => {
 
-
-
 	return (
 		<ModalWrapStyle
-			className={active == 'add' || active == 'delete' ? "active" : ""} onKeyDown={(e) => console.log(e.key)}
+			className={active == 'add' || active == 'delete' ? "active" : ""}
 		>
 			<ModalStyle>
 				<div className="header-modal">
