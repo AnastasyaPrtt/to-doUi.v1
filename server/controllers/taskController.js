@@ -76,16 +76,7 @@ class TaskController {
 		return res.json({ updatedTask })
 	}
 
-	async filterToday(req, res, next) {
-		const { userId } = req.query;
-		const dateNow = String(new Date().getFullYear() + '-' + (new Date().getMonth() + 1 < 10 ? '0' + new Date().getMonth() + 1 : new Date().getMonth() + 1) + '-' + (new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate()));
 
-		const tasks = await Task.findAll({ where: { userId: +userId, date: dateNow } })
-		if (!tasks) {
-			return next(ApiError.badRequest('нет на сегодня задач'))
-		}
-		return res.json({ tasks })
-	}
 
 }
 

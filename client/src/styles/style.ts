@@ -174,29 +174,29 @@ export const ButtonStyle = styled.button<{ $name?: string }>`
 
   &:hover {
     ${(props) => {
-    switch (props.$name) {
-      case "Add task":
-        return css`
+      switch (props.$name) {
+        case "Add task":
+          return css`
             background: #9233ea4b;
             color: #9333ea;
           `;
-      case "Save":
-        return css`
+        case "Save":
+          return css`
             background: #67b9cb50;
             color: #67b8cb;
           `;
-      case "Close":
-        return css`
+        case "Close":
+          return css`
             background: #6b728052;
             color: #6b7280;
           `;
-      case "Delete":
-        return css`
+        case "Delete":
+          return css`
             background: #f564974b;
             color: #f56497;
           `;
-    }
-  }}
+      }
+    }}
   }
 `;
 export const MainStyle = styled.div`
@@ -243,7 +243,7 @@ export const NavBarStyle = styled.div`
     border-radius: 10px;
     z-index: 2;
     display: none;
-    background: #D3C9FC;
+    background: #d3c9fc;
     &.active {
       display: block;
       display: flex;
@@ -264,10 +264,9 @@ export const ListTasksStyle = styled.div`
   background: #f4f4f4;
   border-radius: 10px;
   padding: 30px 19px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 export const TaskStyle = styled.li`
   position: relative;
@@ -319,15 +318,16 @@ export const TaskStyle = styled.li`
   }
 `;
 export const DropdownBtnStyled = styled.div`
-cursor: pointer;
+  cursor: pointer;
   position: absolute;
+	z-index: 2;
   display: none;
-  bottom: -10px;
-  right: 10px;
+  bottom: -23px;
+  right: 15px;
   border-radius: 10px;
   border: 1px solid #7d40ff;
   background: white;
-  padding: 2px 5px;
+  padding: 5px 8px;
   &.active {
     display: block;
   }
@@ -406,34 +406,33 @@ export const ModalStyle = styled.div`
 export const PaginationStyle = styled.div`
   display: flex;
   justify-content: center;
-  button{
-		cursor: pointer;
-		background: none;
-		border: none;
-		outline: none;
-		border-radius: 50px;
-		width: 20px;
-		height: 20px;
-		margin-right: 5px;
-		&.active{
-			border: 1px solid #983DEB;
-		}
-		&:hover{
-			border: 1px solid #983DEB;
-		}
-		&:active{
-			border: 1px solid #983DEB;
-		}
-	}
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    &.active {
+      border: 1px solid #983deb;
+    }
+    &:hover {
+      border: 1px solid #983deb;
+    }
+    &:active {
+      border: 1px solid #983deb;
+    }
+  }
 `;
 export const DropdownStyled = styled.div`
-	display: none;
-	position: absolute;
-	background: #D5CAFD;
-	border-radius: 10px;
-	&.active{
-		display: block;
-		z-index: 2;
-
-	}
-`
+  display: none;
+  position: absolute;
+  background: #d5cafd;
+  border-radius: 10px;
+  &.active {
+    display: block;
+    z-index: 2;
+  }
+`;

@@ -16,7 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({ addTask, onClick, filter }) => {
 	const changeButtonName = (name: string, show: boolean) => {
 		setIsActive(false)
 		setBtn(name)
-		filter(name)
+		name === 'All' ? filter(name) : name == 'Done' ? filter(true) : filter(false)
 		setFilterBtn(show)
 	}
 

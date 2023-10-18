@@ -6,7 +6,11 @@ import { Modal } from './Modal'
 import { DeleteIcon, SaveIcon } from '../../public'
 import axios from 'axios'
 import { TaskProps } from '@/interface/interface'
-import jwtDecode from 'jwt-decode'
+import { getTasks } from '../services/tasks/getTaskAPI'
+import { postCreateTask } from '@/services/tasks/createTaskAPI'
+import { putChangeTask } from '@/services/tasks/putChangeTaskAPI'
+import { deleteTask } from '@/services/tasks/deleteTaskAPI'
+import { useOnKeyPress } from '@/useOnKeyPress'
 
 export const Main: React.FC = () => {
 
@@ -26,30 +30,21 @@ export const Main: React.FC = () => {
 	const handleCompleteStatusUpdate = async (item: TaskProps) => {
 		setTasks(tasks.map(task => task.id == item.id ? { ...task, isChecked: !task.isChecked } : task))
 		const isChecked = !item.isChecked
-		axios
-			.put('http://localhost:7000/api/tasks/' + `${item.id}`, { isChecked })
-			.then(data => console.log(data))
-			.catch((err) => console.error(err))
+		await putChangeTask(item.id, { isChecked })
 	}
 
-	const handleClickEditTask = (item: TaskProps, title: string) => {
+	const handleClickEditTask = async (item: TaskProps, title: string) => {
 		setTasks(tasks.map(task => task.id == item.id ? { ...task, title: title } : task))
-		axios
-			.put('http://localhost:7000/api/tasks/' + `${item.id}`, { title })
-			.then(data => console.log(data))
-			.catch((err) => console.error(err))
+		await putChangeTask(item.id, { title })
 	}
 
-	const handleClickDelete = () => {
+	const handleClickDelete = async () => {
 		setTasks(tasks.filter(task => task.id !== removeTask))
 		setModal('none')
-		axios
-			.delete('http://localhost:7000/api/tasks/' + `${removeTask}`)
-			.then(data => console.log(data))
-			.catch((err) => console.error(err))
+		await deleteTask(removeTask)
 		setCount(count - 1)
 		page !== 1 ? setPage(page - 1) : setPage(page)
-		getTasks('All')
+		gettingTasks('All')
 	}
 
 	const addTask = () => {
@@ -60,43 +55,42 @@ export const Main: React.FC = () => {
 			date: createTask.date,
 			isChecked: false
 		}
-		postCreateTask(task)
+		newTask(task)
 		setPage(1)
 		setCreateTask({ title: '', date: '' })
 		setModal('none')
 	}
 
-	const getTasks = (filter: string) => {
-		const token = localStorage.getItem('token') || undefined
-		if (token !== undefined) {
-			const user = jwtDecode(token)
-			axios
-				.get('http://localhost:7000/api/tasks?userId=' + `${user.id}` + `&filterBy=${filter}` + `&page=${page}`)
-				.then(data => {
-					setTasks(data.data.tasks.rows)
-					setCount(data.data.tasks.count)
-				})
-				.catch((err) => console.error(err))
+	async function gettingTasks(filter: string | boolean) {
+		try {
+			const tasks: any = await getTasks(filter, page)
+			setTasks(tasks.rows)
+			setCount(tasks.count)
+		} catch (error) {
+			alert(error)
 		}
 	}
 
-	const postCreateTask = async (task: TaskProps) => {
-		const token = localStorage.getItem('token') || undefined
-		if (token !== undefined) {
-			const user = jwtDecode(token)
-			axios
-				.post('http://localhost:7000/api/tasks/' + `${user.id}`, task)
-				.then(data => console.log(data.data))
-				.catch((err) => console.error(err))
+	async function newTask(item: TaskProps) {
+		try {
+			await postCreateTask(item)
+		} catch (error) {
+			console.log(error)
 		}
-		getTasks('All')
+		gettingTasks('All')
 	}
+
+	const closeModal = () => {
+		setModal('none')
+	}
+
 
 	useEffect(() => {
-		getTasks('All')
+		gettingTasks('All')
 	}, [])
+
 	useEffect(() => {
-		getTasks('All')
+		gettingTasks('All')
 		setCount(count)
 	}, [page])
 
@@ -112,7 +106,7 @@ export const Main: React.FC = () => {
 		<MainStyle>
 			<Navbar
 				addTask={() => setModal('add')}
-				filter={(filter) => getTasks(filter)}
+				filter={(filter) => gettingTasks(filter)}
 			/>
 			<ListTasks
 				tasks={renderTasks}

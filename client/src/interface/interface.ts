@@ -47,7 +47,7 @@ export interface PaginationProps {
 export interface NavbarProps {
 	addTask: () => void,
 	onClick?: () => void,
-	filter: (filter: string) => void
+	filter: (filter: string | boolean) => void
 }
 export interface TaskInterface {
 	task: TaskProps,

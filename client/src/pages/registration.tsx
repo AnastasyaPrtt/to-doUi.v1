@@ -1,39 +1,32 @@
 import { FormAuth, Global } from '@/styles/style';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
+import { login } from '@/services/user/loginAPI';
+import { registration } from '@/services/user/registrationAPI';
+
 const Registration = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [isLogin, setIsLogin] = useState(true)
 	const [auth, setAuth] = useState(false)
+
+
 	const router = useRouter()
 
-	const signIn = () => {
 
+
+	async function signIn() {
 		if (isLogin) {
-			axios
-				.post('http://localhost:7000/api/user/login', { email, password })
-				.then(data => {
-					localStorage.setItem('token', data.data.token)
-					setAuth(true)
-				})
-				.catch((error) => alert(error.response.data.message))
+			await login(email, password)
+			setAuth(true)
 		} else {
-			axios
-				.post('http://localhost:7000/api/user/registration', { email, password })
-				.then(data => {
-					localStorage.setItem('token', data.data.token)
-					setAuth(true)
-				})
-				.catch((error) => alert(error.response.data.message))
+			await registration(email, password)
+			setAuth(true)
 		}
 	}
 
-
 	useEffect(() => {
 		if (window.localStorage.token) {
-			console.log('!')
 			router.back()
 		}
 	}, [auth])

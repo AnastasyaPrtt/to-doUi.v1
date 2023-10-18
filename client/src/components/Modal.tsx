@@ -10,6 +10,7 @@ export const Modal: React.FC<ModalProps> = ({ active, title, nameBtn, IconBtn, c
 	return (
 		<ModalWrapStyle
 			className={active == 'add' || active == 'delete' ? "active" : ""}
+
 		>
 			<ModalStyle>
 				<div className="header-modal">
